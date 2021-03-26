@@ -9,7 +9,7 @@ export class ComponentsBuilder {
   #activity
   constructor(){}
 
-  baseComponent() {
+  #baseComponent() {
     return {
       border: 'line',
       mouse: true,
@@ -65,7 +65,7 @@ export class ComponentsBuilder {
 
   setChatComponent() {
     this.#chat = blessed.list({
-      ...this.baseComponent(),
+      ...this.#baseComponent(),
       parent: this.#layout,
       align: 'left',
       width: '50%',
@@ -77,7 +77,7 @@ export class ComponentsBuilder {
 
   setStatusComponent() {
     this.#status = blessed.list({
-      ...this.baseComponent(),
+      ...this.#baseComponent(),
       parent: this.#layout,
       width: '25%',
       height: '90%',
@@ -88,7 +88,7 @@ export class ComponentsBuilder {
 
   setActivityLogComponent() {
     this.#activity = blessed.list({
-      ...this.baseComponent(),
+      ...this.#baseComponent(),
       parent: this.#layout,
       width: '25%',
       height: '90%',

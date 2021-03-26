@@ -1,8 +1,25 @@
-import { TerminalController } from './controllers/index.js'
-
 import Events from 'events'
+import { TerminalController } from './controllers/index.js'
+import { CliConfig } from './cliConfig.js'
+import { SocketClient } from './socket.js'
 
-const componentEmitter = new Events()
-const controller = new TerminalController()
+/**
+ * @description
+ *  node index.js
+ *    --username igorbecker
+ *    --room sala01
+ *    --hostUrl localhost
+ */
 
-await controller.initializer(componentEmitter)
+const [nodePath, filePath, ...commands] = process.argv
+
+const config = CliConfig.parseArguments(commands)
+
+// const componentEmitter = new Events()
+
+const socket = new SocketClient(config)
+
+await socket.initialize()
+
+// const controller = new TerminalController()
+// await controller.initializer(componentEmitter)
