@@ -1,28 +1,31 @@
-export class CliConfig {
-  constructor({ username, hostUri, room}) {
-    this.username = username
-    this.room = room
+export default class CliConfig {
+    constructor({ username, hostUri, room }) {
+        this.username = username
+        this.room = room 
 
-    const { protocol, hostname, port } = new URL(hostUri)
+        const { hostname, port, protocol } = new URL(hostUri)
 
-    this.hostUri = hostname
-    this.port = Number(port)
-    this.protocol = protocol.replace(/\W/, '')
-  }
-  
-  static parseArguments(commands) {
-    const cmd = new Map()
-    for(const key in commands) {
-
-      const index = Number(key)
-      const command = commands[key]
-      const commandPrefix = '--'
-
-      if (!command.includes(commandPrefix)) continue
-
-      cmd.set(command.replace(commandPrefix, ''), commands[index + 1])
+        this.host = hostname
+        this.port = port
+        this.protocol = protocol.replace(/\W/, '')
+        
     }
+    static parseArguments(commands) {
+        const cmd = new Map()
+        for(const key in commands) {
 
-    return new CliConfig(Object.fromEntries(cmd))
-  }
+            const index = parseInt(key)
+            const command = commands[key]
+
+            const commandPreffix = '--'
+            if(!command.includes(commandPreffix)) continue;
+            
+            cmd.set(
+                command.replace(commandPreffix, ''),
+                commands[index + 1]
+            )
+        }
+
+        return new CliConfig(Object.fromEntries(cmd))
+    }
 }
