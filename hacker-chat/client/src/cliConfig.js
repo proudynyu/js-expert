@@ -1,5 +1,11 @@
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+const PRODUCTION_URL = process.env.PRODUCTION_URL || 'http://localhost:9898'
+
 export default class CliConfig {
-  constructor({ username, hostUri, room }) {
+  constructor({ username, hostUri = PRODUCTION_URL, room }) {
     this.username = username
     this.room = room
 
