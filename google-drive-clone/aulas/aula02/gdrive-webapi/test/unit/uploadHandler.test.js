@@ -114,7 +114,38 @@ describe('#UploadHandler test suite', () => {
   })
 
   describe('#canExecute', () => {
-    test.todo('should return true when time is later than specified delay')
-    test.todo('should return false when time isn\'t than specified delay')
+    test('should return true when time is later than specified delay', () => {
+      const timerDelay = 1000
+      const uploadHandler = new UploadHandler({
+        io: {},
+        sockedId: '',
+        messageTimeDelay: timerDelay
+      })
+
+      const tickNow = TestUtil.getTimeFromDate('2021-07-01 00:00:03')
+      TestUtil.mockDateNow([tickNow])
+
+      const lastExecution = TestUtil.getTimeFromDate('2021-07-01 00:00:00')
+
+      const result = uploadHandler.canExecute(lastExecution)
+      expect(result).toBeTruthy()
+    })
+
+    test('should return false when time isn\'t than specified delay', () => {
+      const timerDelay = 3000
+      const uploadHandler = new UploadHandler({
+        io: {},
+        sockedId: '',
+        messageTimeDelay: timerDelay
+      })
+
+      const tickNow = TestUtil.getTimeFromDate('2021-07-01 00:00:03')
+      TestUtil.mockDateNow([tickNow])
+
+      const lastExecution = TestUtil.getTimeFromDate('2021-07-01 00:00:02')
+
+      const result = uploadHandler.canExecute(lastExecution)
+      expect(result).toBeFalsy()
+    })
   })
 })
